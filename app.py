@@ -81,11 +81,16 @@ price_data = load_prices()
 
 CROP_FEATURES = ["N", "P", "K", "temperature", "humidity", "ph", "rainfall"]
 
-SOIL_TYPES = ["Sandy", "Clay", "Loamy", "Silty"]
-CROP_TYPES = ["Wheat", "Rice", "Maize", "Cotton", "Sugarcane", "Pulses", "Vegetables"]
-GROWTH_STAGES = ["Seedling", "Vegetative", "Flowering", "Maturity"]
+# NOTE: These lists MUST exactly match the categories the fertilizer
+# model's OneHotEncoder was fit on (see fertilizer_pipeline.pkl's
+# preprocessor.named_transformers_['cat'].categories_). Any value not
+# in this list gets silently zeroed out by handle_unknown='ignore',
+# which was previously feeding the model garbage categorical data.
+SOIL_TYPES = ["Clay", "Loamy", "Sandy", "Silt"]
+CROP_TYPES = ["Cotton", "Maize", "Potato", "Rice", "Sugarcane", "Tomato", "Wheat"]
+GROWTH_STAGES = ["Flowering", "Harvest", "Sowing", "Vegetative"]
 SEASONS = ["Kharif", "Rabi", "Zaid"]
-IRRIGATION_TYPES = ["Drip", "Sprinkler", "Flood", "Rainfed"]
+IRRIGATION_TYPES = ["Canal", "Drip", "Rainfed", "Sprinkler"]
 
 # ---------------------------------------------------------
 # Header
@@ -158,27 +163,30 @@ with tab2:
         st.markdown("**Soil Nutrients**")
         col3, col4, col5 = st.columns(3)
         with col3:
-            nitrogen = st.number_input("Nitrogen Level", min_value=0.0, max_value=200.0, value=80.0)
+            nitrogen = st.number_input("Nitrogen Level", min_value=0.0, max_value=210.0, value=89.0)
         with col4:
-            phosphorus = st.number_input("Phosphorus Level", min_value=0.0, max_value=200.0, value=40.0)
+            phosphorus = st.number_input("Phosphorus Level", min_value=0.0, max_value=120.0, value=49.0)
         with col5:
-            potassium = st.number_input("Potassium Level", min_value=0.0, max_value=200.0, value=45.0)
+            potassium = st.number_input("Potassium Level", min_value=0.0, max_value=160.0, value=64.0)
 
         col6, col7 = st.columns(2)
         with col6:
             soil_ph = st.slider("Soil pH ", min_value=3.5, max_value=10.0, value=6.5, step=0.1)
-            soil_moisture = st.number_input("Soil Moisture (%)", min_value=0.0, max_value=100.0, value=30.0)
+            soil_moisture = st.number_input("Soil Moisture (%)", min_value=0.0, max_value=80.0, value=35.0)
         with col7:
-            organic_carbon = st.number_input("Organic Carbon (%)", min_value=0.0, max_value=5.0, value=1.2)
+            organic_carbon = st.number_input("Organic Carbon (%)", min_value=0.0, max_value=2.0, value=0.85, step=0.05)
 
         st.markdown("**Weather Conditions**")
         col8, col9, col10 = st.columns(3)
         with col8:
-            fert_temperature = st.number_input("Temperature (°C) ", min_value=0.0, max_value=50.0, value=28.0)
+            fert_temperature = st.number_input("Temperature (°C) ", min_value=0.0, max_value=50.0, value=25.0)
         with col9:
             fert_humidity = st.number_input("Humidity (%) ", min_value=0.0, max_value=100.0, value=60.0)
         with col10:
-            fert_rainfall = st.number_input("Rainfall (mm) ", min_value=0.0, max_value=300.0, value=120.0)
+            # Training data used annual rainfall (mean ~1580mm, std ~810mm),
+            # not a single storm event. The old 0-300 cap made every possible
+            # input an extreme outlier the model had never seen.
+            fert_rainfall = st.number_input("Annual Rainfall (mm) ", min_value=0.0, max_value=4000.0, value=1580.0)
 
         fert_submitted = st.form_submit_button("Get Fertilizer Recommendation 🧪")
 
@@ -202,7 +210,23 @@ with tab2:
 
         try:
             fert_prediction = fertilizer_pipeline.predict(sample)[0]
+
+            # --- OOD check: flag inputs far outside the training distribution ---
+            num_cols = ["Soil_pH", "Soil_Moisture", "Organic_Carbon", "Nitrogen_Level",
+                        "Phosphorus_Level", "Potassium_Level", "Temperature", "Humidity", "Rainfall"]
+            scaler = fertilizer_pipeline.preprocessor.named_transformers_["num"]
+            z_scores = (sample[num_cols].values[0] - scaler.mean_) / scaler.scale_
+            extreme = [(col, z) for col, z in zip(num_cols, z_scores) if abs(z) > 2.5]
+
             st.success(f"### Recommended Fertilizer: **{fert_prediction}** 🧪")
+
+            if extreme:
+                extreme_list = ", ".join(f"{col.replace('_', ' ')}" for col, _ in extreme)
+                st.warning(
+                    f"⚠️ {extreme_list} are unusually far from typical values in the training "
+                    "data. The model's prediction for this combination may be unreliable — "
+                    "treat it as a rough guess rather than a confident recommendation."
+                )
 
             # ---------------------------------------------------------
             # Show top brands + prices for the recommended fertilizer
