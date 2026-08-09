@@ -1,0 +1,55 @@
+{
+  "last_updated": "2026-08-09T10:00:00+05:30",
+  "note": "Prices are per standard bag (45-50kg for Urea/DAP/MOP/NPK/SSP, per kg for Zinc Sulphate, per bag for Compost). Manually curated reference prices based on typical Indian market rates — replace with live scraped data when automation is added.",
+  "prices": {
+    "Urea": [
+      {"brand": "IFFCO Urea (Neem Coated)", "price": 266, "unit": "45kg bag", "link": "https://www.iffco.in/en/urea-fertilizer"},
+      {"brand": "KRIBHCO Urea", "price": 266, "unit": "45kg bag", "link": "https://www.kribhco.net/"},
+      {"brand": "NFL Urea", "price": 266, "unit": "45kg bag", "link": "https://nationalfertilizers.com/"},
+      {"brand": "Coromandel Urea", "price": 268, "unit": "45kg bag", "link": "https://www.coromandelagro.com/"},
+      {"brand": "RCF Urea", "price": 266, "unit": "45kg bag", "link": "https://www.rcfltd.com/"}
+    ],
+    "DAP": [
+      {"brand": "IFFCO DAP", "price": 1350, "unit": "50kg bag", "link": "https://www.iffco.in/en/dap-18-46-0"},
+      {"brand": "Coromandel DAP", "price": 1350, "unit": "50kg bag", "link": "https://www.coromandelagro.com/"},
+      {"brand": "PPL DAP", "price": 1345, "unit": "50kg bag", "link": "https://www.paradeepphosphates.com/"},
+      {"brand": "Chambal DAP", "price": 1350, "unit": "50kg bag", "link": "https://www.chambalfertilisers.com/"},
+      {"brand": "GSFC DAP", "price": 1355, "unit": "50kg bag", "link": "https://www.gsfclimited.com/"}
+    ],
+    "MOP": [
+      {"brand": "IFFCO MOP", "price": 1700, "unit": "50kg bag", "link": "https://www.iffco.in/"},
+      {"brand": "IPL MOP", "price": 1695, "unit": "50kg bag", "link": "https://www.indianpotash.org/"},
+      {"brand": "Coromandel MOP", "price": 1700, "unit": "50kg bag", "link": "https://www.coromandelagro.com/"},
+      {"brand": "KRIBHCO MOP", "price": 1690, "unit": "50kg bag", "link": "https://www.kribhco.net/"},
+      {"brand": "RCF MOP", "price": 1705, "unit": "50kg bag", "link": "https://www.rcfltd.com/"}
+    ],
+    "NPK": [
+      {"brand": "IFFCO NPK 12:32:16", "price": 1470, "unit": "50kg bag", "link": "https://www.iffco.in/"},
+      {"brand": "Coromandel Gromor NPK", "price": 1450, "unit": "50kg bag", "link": "https://www.coromandelagro.com/"},
+      {"brand": "PPL NPK 10:26:26", "price": 1460, "unit": "50kg bag", "link": "https://www.paradeepphosphates.com/"},
+      {"brand": "Chambal NPK", "price": 1455, "unit": "50kg bag", "link": "https://www.chambalfertilisers.com/"},
+      {"brand": "GSFC NPK", "price": 1465, "unit": "50kg bag", "link": "https://www.gsfclimited.com/"}
+    ],
+    "SSP": [
+      {"brand": "IFFCO SSP", "price": 450, "unit": "50kg bag", "link": "https://www.iffco.in/"},
+      {"brand": "Coromandel SSP", "price": 440, "unit": "50kg bag", "link": "https://www.coromandelagro.com/"},
+      {"brand": "GSFC SSP", "price": 445, "unit": "50kg bag", "link": "https://www.gsfclimited.com/"},
+      {"brand": "Hindalco SSP", "price": 435, "unit": "50kg bag", "link": "https://www.hindalco.com/"},
+      {"brand": "Khaitan SSP", "price": 430, "unit": "50kg bag", "link": "https://www.khaitanchemicals.com/"}
+    ],
+    "Zinc Sulphate": [
+      {"brand": "IFFCO Zinc Sulphate", "price": 85, "unit": "1kg", "link": "https://www.iffco.in/"},
+      {"brand": "Coromandel Zinc Sulphate", "price": 90, "unit": "1kg", "link": "https://www.coromandelagro.com/"},
+      {"brand": "BigHaat Zinc Sulphate 21%", "price": 80, "unit": "1kg", "link": "https://www.bighaat.com/"},
+      {"brand": "Agribegri Zinc Sulphate", "price": 82, "unit": "1kg", "link": "https://www.agribegri.com/"},
+      {"brand": "Tata Rallis Zinc Sulphate", "price": 95, "unit": "1kg", "link": "https://www.tatarallis.com/"}
+    ],
+    "Compost": [
+      {"brand": "IFFCO Organic Compost", "price": 250, "unit": "50kg bag", "link": "https://www.iffco.in/"},
+      {"brand": "KRIBHCO Compost", "price": 240, "unit": "50kg bag", "link": "https://www.kribhco.net/"},
+      {"brand": "BigHaat Vermicompost", "price": 300, "unit": "50kg bag", "link": "https://www.bighaat.com/"},
+      {"brand": "Agribegri Organic Compost", "price": 260, "unit": "50kg bag", "link": "https://www.agribegri.com/"},
+      {"brand": "DeHaat Compost", "price": 255, "unit": "50kg bag", "link": "https://www.dehaat.net/"}
+    ]
+  }
+}
